@@ -1,3 +1,10 @@
+from fastapi import Depends
+from sqlalchemy.orm import Session
+
+from database import get_db_connection
+from models import Conversation
+
+
 class ConversationRepository:
     db: Session
 
@@ -6,11 +13,9 @@ class ConversationRepository:
     ) -> None:
         self.db = db
 
-    def get(self, id):
-        return self.db.get('conversations', id)
-
-    def save(self, conversation):
-        self.db.save('conversations', conversation)
-
-    def delete(self, conversation):
-        self.db.delete('conversations', conversation)
+    def list(self, chat_id: int) -> list[Conversation]:
+        """Get the history of a conversation with a user from
+        the chat_id."""
+        query = self.db.query(Conversation).filter(
+            Conversation.chat_id == chat_id)
+        return query.all()
