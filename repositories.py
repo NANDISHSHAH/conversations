@@ -19,3 +19,4 @@ class ConversationRepository:
         query = self.db.query(Conversation).filter(
             Conversation.chat_id == chat_id)
         return query.all()
+
