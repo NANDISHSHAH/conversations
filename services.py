@@ -2,6 +2,8 @@ from fastapi import Depends
 
 from models import Conversation
 from repositories import ConversationRepository
+from sqlalchemy.orm import Session
+from database import get_db_connection
 
 
 class ConversationService:
